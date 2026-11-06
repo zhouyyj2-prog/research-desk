@@ -1,0 +1,11 @@
+{
+  "enabled": true,
+  "button": "♥ 支持作者",
+  "title": "支持作者",
+  "text": "研究台免费开源，全部功能都能直接用。如果它帮到了你，可以自愿请作者喝杯咖啡，金额随意，非常感谢！",
+  "items": [
+    { "label": "微信赞赏", "img": "wechat.jpg" },
+    { "label": "支付宝", "img": "alipay.jpg" }
+  ],
+  "links": []
+}

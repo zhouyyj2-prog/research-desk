@@ -1,0 +1,27 @@
+# 个人数据：API Key、文库数据库、上传的论文和课件、手机访问密钥——绝不能提交
+**/data/
+data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+config.json
+lan_secret
+
+# 用户自己放的收款码以外的个人文件夹
+research-desk/论文库/
+research-desk/每日简报/
+research-desk/组会汇报/
+
+# 系统 / 编辑器 / Python 缓存
+.DS_Store
+__pycache__/
+*.pyc
+*.bak*
+_to_delete/
+
+# 手机常驻守护脚本依赖本机 sudo 设置，不随开源版发布
+research-desk/app/keepalive.sh
+
+# 用户自己安装的整篇翻译程序（体积大，不随仓库发布）
+research-desk/translator/

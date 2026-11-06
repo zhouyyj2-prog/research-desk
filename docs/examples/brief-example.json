@@ -1,0 +1,75 @@
+{
+  "mode": "create",
+  "papers": [
+    {
+      "id": "2101.00001",
+      "arxiv": "2101.00001",
+      "title": "示例论文标题（换成真实论文）",
+      "authors": "作者 A, 作者 B",
+      "date": "2021-01-01",
+      "link": "https://arxiv.org/abs/2101.00001",
+      "direction": "综述",
+      "kind": "精读",
+      "briefDate": "2026-01-05",
+      "addedAt": "2026-01-05T07:30:00+08:00",
+      "contribution": "一句话：这篇论文做了什么。",
+      "threat": "问题设定 / 前提假设。",
+      "relevance": "和你研究方向的关系。",
+      "advice": "精读",
+      "tags": [],
+      "collections": [],
+      "notes": "",
+      "excerpts": []
+    }
+  ],
+  "ideas": [
+    {
+      "id": "2026-01-05-1",
+      "date": "2026-01-05",
+      "order": 1,
+      "source": "示例论文 (2101.00001)",
+      "sourceArxiv": "2101.00001",
+      "direction": "综述",
+      "title": "一句话写清这个可改进点",
+      "kind": "方法改进",
+      "basisType": "论文自述 + 推断",
+      "basis": "依据：论文里的哪张表、哪个结论。",
+      "approach": "打算怎么改。",
+      "experiment": "最小实验：数据、对照、指标。",
+      "novelty": "最接近的已有工作，以及差别。",
+      "recommended": true,
+      "status": "待定",
+      "note": ""
+    }
+  ],
+  "briefs": [
+    {
+      "id": "2026-01-05",
+      "date": "2026-01-05",
+      "day": 1,
+      "week": 1,
+      "weekday": "周一",
+      "window": "检索窗口说明，例如：最近 14 天。",
+      "deepRead": {
+        "arxiv": "2101.00001",
+        "title": "示例论文标题（换成真实论文）",
+        "authors": "作者 A, 作者 B",
+        "date": "2021-01-01",
+        "link": "https://arxiv.org/abs/2101.00001",
+        "direction": "综述",
+        "source": "读的是全文还是摘要",
+        "reason": "为什么选这篇",
+        "problem": "问题与动机",
+        "method": "核心方法，公式用 $...$ 写成 LaTeX，例如 $E=mc^2$",
+        "results": "主要结果",
+        "limits": "局限",
+        "untested": "论文没测的情形"
+      },
+      "topIdea": "今天最推荐的一条想法及理由。",
+      "action": "今天 30–60 分钟能做的一步。",
+      "planLink": "",
+      "weekly": "",
+      "note": ""
+    }
+  ]
+}

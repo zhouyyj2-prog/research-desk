@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>研究台 · 小白操作手册</title>
+<meta name="description" content="研究台新手操作手册：从下载、启动、填 API Key，到读论文、翻译、记笔记和各个功能页的用法。">
+<style>
+:root{
+  --bg:#f5f4f0; --panel:#ffffff; --ink:#191a1f; --muted:#5d6170; --faint:#8a8e9b; --line:#e5e3dc; --line2:#efede7;
+  --accent:#2b54c9; --accent-ink:#1f3f9c; --accent-soft:#e8edfb; --accent-softer:#f3f6fd;
+  --warm:#b4580a; --warm-soft:#fdf3e7; --good:#17804a; --good-soft:#e8f5ee; --bad:#b42318; --bad-soft:#fdeceb;
+  --shadow:0 1px 2px rgba(25,26,31,.04),0 10px 30px -12px rgba(25,26,31,.12);
+  --r:16px; --r-sm:10px;
+  --sans:"PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121317; --panel:#1a1c22; --ink:#ecedf1; --muted:#a6aab8; --faint:#7d8191; --line:#2c2f38; --line2:#24262e;
+  --accent:#86a3ff; --accent-ink:#a9bdff; --accent-soft:#222c48; --accent-softer:#1d2335;
+  --warm:#f0a35e; --warm-soft:#33261a; --good:#5fc48d; --good-soft:#18291f; --bad:#f08b80; --bad-soft:#331c1a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px -12px rgba(0,0,0,.5);
+}}
+:root[data-theme="dark"]{
+  --bg:#121317; --panel:#1a1c22; --ink:#ecedf1; --muted:#a6aab8; --faint:#7d8191; --line:#2c2f38; --line2:#24262e;
+  --accent:#86a3ff; --accent-ink:#a9bdff; --accent-soft:#222c48; --accent-softer:#1d2335;
+  --warm:#f0a35e; --warm-soft:#33261a; --good:#5fc48d; --good-soft:#18291f; --bad:#f08b80; --bad-soft:#331c1a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px -12px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+code{font-family:var(--mono);font-size:.86em;background:var(--line2);border:1px solid var(--line);border-radius:6px;padding:1px 6px;white-space:nowrap}
+.ui{display:inline-flex;align-items:center;gap:4px;font:600 .82em/1.4 var(--sans);color:var(--ink);background:var(--panel);border:1px solid var(--line);border-bottom-width:2px;border-radius:8px;padding:1px 8px;margin:0 1px;white-space:nowrap;vertical-align:1px}
+.ui.pri{background:var(--accent);border-color:var(--accent-ink);color:#fff}
+:root[data-theme="dark"] .ui.pri{color:#0f1424}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ui.pri{color:#0f1424}}
+
+/* layout */
+.shell{display:grid;grid-template-columns:248px minmax(0,1fr);gap:40px;max-width:1180px;margin:0 auto;padding:0 28px}
+aside.toc{position:sticky;top:0;height:100vh;padding:34px 0 24px;overflow:auto}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.05rem;margin:0 0 4px}
+.logo{width:30px;height:30px;border-radius:9px;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-size:15px}
+.brand-sub{color:var(--faint);font-size:.82rem;margin:0 0 24px 40px}
+.toc nav{display:flex;flex-direction:column;gap:2px}
+.toc .grp{font-size:.72rem;letter-spacing:.08em;color:var(--faint);margin:18px 0 6px 12px;font-weight:600}
+.toc a{display:flex;align-items:center;gap:10px;color:var(--muted);text-decoration:none;padding:7px 12px;border-radius:9px;font-size:.92rem;line-height:1.35}
+.toc a .n{font:600 .72rem var(--mono);color:var(--faint);width:18px}
+.toc a:hover{background:var(--panel);color:var(--ink)}
+.toc a.on{background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
+.toc a.on .n{color:var(--accent)}
+.toc .tools{margin-top:22px;padding:12px;border-top:1px solid var(--line);display:flex;gap:8px;flex-wrap:wrap}
+.tbtn{font:500 .8rem var(--sans);border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:8px;padding:5px 10px;cursor:pointer}
+.tbtn:hover{color:var(--ink)}
+main{padding:34px 0 120px;min-width:0}
+
+/* hero */
+.hero{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:38px 40px 32px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:-40% -20% auto auto;width:460px;height:460px;background:radial-gradient(closest-side,var(--accent-soft),transparent);pointer-events:none}
+.eyebrow{font:600 .76rem/1 var(--sans);letter-spacing:.12em;color:var(--accent);margin:0 0 14px;text-transform:uppercase}
+.hero h1{font-size:2.3rem;line-height:1.2;margin:0 0 12px;letter-spacing:-.01em;position:relative}
+.hero .lead{color:var(--muted);font-size:1.06rem;max-width:620px;margin:0 0 26px;position:relative}
+.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;position:relative}
+.flow .st{border:1px solid var(--line);background:var(--bg);border-radius:var(--r);padding:16px 16px 14px;position:relative}
+.flow .st b{display:block;font-size:.98rem;margin-bottom:2px}
+.flow .st span{color:var(--muted);font-size:.86rem}
+.flow .st i{font-style:normal;font:700 .72rem var(--mono);color:var(--accent);display:block;margin-bottom:8px}
+.flow .st:not(:last-child):after{content:"→";position:absolute;right:-12px;top:50%;transform:translate(50%,-50%);color:var(--faint);font-size:.9rem;z-index:1}
+.facts{display:flex;gap:18px;flex-wrap:wrap;margin-top:22px;color:var(--muted);font-size:.86rem;position:relative}
+.facts span:before{content:"✓";color:var(--good);font-weight:700;margin-right:6px}
+
+/* sections */
+section.sec{margin-top:56px}
+.sec-h{display:flex;align-items:baseline;gap:14px;margin:0 0 6px}
+.sec-h .num{font:700 .8rem var(--mono);color:var(--accent);background:var(--accent-soft);border-radius:7px;padding:3px 8px}
+.sec-h h2{font-size:1.55rem;margin:0;letter-spacing:-.01em}
+.sec .intro{color:var(--muted);margin:0 0 22px;max-width:680px}
+h3{font-size:1.08rem;margin:28px 0 12px}
+
+/* steps */
+ol.steps{list-style:none;margin:0;padding:0;position:relative}
+ol.steps>li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px;padding:0 0 22px;position:relative}
+ol.steps>li:before{counter-increment:s;content:counter(s);width:34px;height:34px;border-radius:50%;background:var(--panel);border:1.5px solid var(--accent);color:var(--accent);display:grid;place-items:center;font:700 .9rem var(--mono);z-index:1}
+ol.steps>li:not(:last-child):after{content:"";position:absolute;left:16.5px;top:36px;bottom:2px;width:1.5px;background:var(--line)}
+ol.steps{counter-reset:s}
+ol.steps .t{font-weight:700;display:block;margin:4px 0 4px}
+ol.steps .d{color:var(--muted)}
+ol.steps .d p{margin:0 0 8px}
+.os{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 4px}
+.os div{border:1px solid var(--line);background:var(--panel);border-radius:var(--r-sm);padding:10px 12px;font-size:.9rem;color:var(--muted)}
+.os b{color:var(--ink);display:block;font-size:.82rem;margin-bottom:2px;letter-spacing:.04em}
+
+/* cards */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.page{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;display:flex;gap:14px;align-items:flex-start}
+.page .ic{flex:none;width:38px;height:38px;border-radius:11px;background:var(--accent-softer);border:1px solid var(--accent-soft);display:grid;place-items:center;font-size:18px}
+.page b{display:block;font-size:.98rem}
+.page span{color:var(--muted);font-size:.88rem;line-height:1.55;display:block}
+.page.home{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-softer)}
+.feat{display:flex;flex-direction:column;gap:8px}
+.feat .tag{align-self:flex-start;font:600 .72rem var(--sans);color:var(--accent-ink);background:var(--accent-soft);border-radius:999px;padding:2px 10px}
+.feat h4{margin:0;font-size:1.04rem}
+.feat ol{margin:0;padding-left:20px;color:var(--muted);font-size:.92rem}
+.feat ol li{margin:4px 0}
+.feat .foot{margin-top:auto;color:var(--faint);font-size:.82rem;border-top:1px dashed var(--line);padding-top:8px}
+
+/* callouts */
+.note{display:flex;gap:12px;border-radius:var(--r-sm);padding:14px 16px;margin:18px 0;font-size:.93rem;border:1px solid}
+.note .i{flex:none;font-weight:700}
+.note b{display:block;margin-bottom:2px}
+.note.info{background:var(--accent-softer);border-color:var(--accent-soft)}
+.note.info .i{color:var(--accent)}
+.note.warn{background:var(--warm-soft);border-color:color-mix(in srgb,var(--warm) 30%,transparent)}
+.note.warn .i{color:var(--warm)}
+.note.ok{background:var(--good-soft);border-color:color-mix(in srgb,var(--good) 30%,transparent)}
+.note.ok .i{color:var(--good)}
+
+/* faq */
+.faq{display:flex;flex-direction:column;gap:8px}
+details{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);padding:0 16px}
+details summary{cursor:pointer;list-style:none;padding:13px 0;font-weight:600;display:flex;justify-content:space-between;gap:12px;align-items:center}
+details summary::-webkit-details-marker{display:none}
+details summary:after{content:"+";font:400 1.3rem/1 var(--sans);color:var(--faint);transition:transform .2s}
+details[open] summary:after{transform:rotate(45deg)}
+details .a{color:var(--muted);padding:0 0 14px;font-size:.94rem}
+details .a p{margin:0 0 6px}
+
+/* misc */
+.kv{display:grid;grid-template-columns:150px minmax(0,1fr);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--panel)}
+.kv div{padding:12px 16px;border-top:1px solid var(--line2);font-size:.93rem}
+.kv div:nth-child(-n+2){border-top:0}
+.kv div:nth-child(odd){font-weight:600;background:var(--accent-softer)}
+.kv div:nth-child(even){color:var(--muted)}
+footer{margin-top:72px;padding-top:22px;border-top:1px solid var(--line);color:var(--faint);font-size:.84rem}
+.mtoc{display:none}
+
+@media (max-width:980px){
+  .shell{grid-template-columns:1fr;padding:0 16px}
+  aside.toc{display:none}
+  .mtoc{display:flex;gap:6px;overflow-x:auto;position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);padding:10px 0;margin:0 -16px;padding-left:16px;padding-right:16px;border-bottom:1px solid var(--line)}
+  .mtoc a{flex:none;font-size:.84rem;color:var(--muted);text-decoration:none;padding:5px 11px;border:1px solid var(--line);border-radius:999px;background:var(--panel)}
+  .mtoc a.on{color:var(--accent-ink);border-color:var(--accent);background:var(--accent-soft)}
+  main{padding-top:18px}
+  .hero{padding:26px 20px 22px;border-radius:18px}
+  .hero h1{font-size:1.75rem}
+  .flow,.g2,.g3,.os{grid-template-columns:1fr}
+  .flow .st:not(:last-child):after{content:"↓";right:50%;top:auto;bottom:-14px;transform:translateX(50%)}
+  .kv{grid-template-columns:1fr}
+  .kv div:nth-child(even){border-top:0;padding-top:0}
+}
+@media print{
+  aside.toc,.mtoc,.tools{display:none!important}
+  .shell{display:block;max-width:none;padding:0}
+  body{background:#fff;font-size:12pt}
+  .hero,.card,.page,details,.kv{box-shadow:none}
+  details{break-inside:avoid}
+  details:not([open]) .a{display:block}
+  section.sec{break-before:auto;margin-top:28px}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="toc" aria-label="目录">
+    <div class="brand"><span class="logo" aria-hidden="true">◈</span>研究台</div>
+    <p class="brand-sub">小白操作手册</p>
+    <nav>
+      <div class="grp">开始</div>
+      <a href="#start"><span class="n">01</span>第一次打开</a>
+      <a href="#pages"><span class="n">02</span>认识七个页面</a>
+      <div class="grp">日常使用</div>
+      <a href="#add"><span class="n">03</span>放论文 · 信息自动填</a>
+      <a href="#read"><span class="n">04</span>读论文、划词翻译</a>
+      <a href="#after"><span class="n">05</span>读完留下记录</a>
+      <div class="grp">AI 帮手</div>
+      <a href="#ai"><span class="n">06</span>五个功能页</a>
+      <a href="#fulltext"><span class="n">07</span>全文中英对照翻译</a>
+      <div class="grp">其他</div>
+      <a href="#phone"><span class="n">08</span>手机访问与备份</a>
+      <a href="#faq"><span class="n">09</span>遇到问题怎么办</a>
+    </nav>
+    <div class="tools"><button class="tbtn" id="theme" type="button">切换深色 / 浅色</button><button class="tbtn" type="button" onclick="window.print()">打印</button></div>
+  </aside>
+
+  <main>
+    <nav class="mtoc" aria-label="目录">
+      <a href="#start">第一次打开</a><a href="#pages">七个页面</a><a href="#add">放论文</a><a href="#read">读论文</a><a href="#after">留记录</a><a href="#ai">AI 帮手</a><a href="#fulltext">全文翻译</a><a href="#phone">手机与备份</a><a href="#faq">常见问题</a>
+    </nav>
+
+    <header class="hero">
+      <p class="eyebrow">研究台 · 新手手册</p>
+      <h1>十分钟上手，<br>从放进论文到读懂它</h1>
+      <p class="lead">研究台是装在你自己电脑上的论文阅读助手。不用懂代码，按下面的步骤做一次设置，以后双击就能用。</p>
+      <div class="flow" aria-label="日常用法">
+        <div class="st"><i>STEP 1</i><b>把 PDF 放进文库</b><span>拖进窗口，标题、作者、出处自动填好</span></div>
+        <div class="st"><i>STEP 2</i><b>读原文，问 AI</b><span>划词翻译、解释、提问、拆解</span></div>
+        <div class="st"><i>STEP 3</i><b>留下自己的东西</b><span>高亮、笔记、想法、计划</span></div>
+      </div>
+      <div class="facts"><span>完全免费</span><span>论文和笔记只存在你的电脑上</span><span>Mac 和 Windows 都能用</span></div>
+    </header>
+
+    <!-- 01 -->
+    <section class="sec" id="start">
+      <div class="sec-h"><span class="num">01</span><h2>第一次打开</h2></div>
+      <p class="intro">只需要做一次。以后每次使用，从第 3 步开始就行。</p>
+      <ol class="steps">
+        <li><div><span class="t">下载并解压</span><div class="d">
+          <p>在项目的 GitHub 页面点绿色的 <span class="ui">Code</span> → <span class="ui">Download ZIP</span>。下载后<strong>先完整解压</strong>，解压出来的文件夹叫「仓库名-main」，例如 <code>research-desk-main</code>。不要在压缩包里直接双击。</p></div></div></li>
+        <li><div><span class="t">准备 Python（只需一次）</span><div class="d">
+          <div class="os"><div><b>MAC</b>通常不用装。第一次启动时如果弹窗让你安装「命令行开发者工具」，点 <span class="ui">安装</span>，装完再启动一次。</div>
+          <div><b>WINDOWS</b>先到 <a href="https://www.python.org/downloads/" target="_blank" rel="noopener">python.org</a> 下载安装，安装界面最下方务必勾选 <span class="ui">Add python.exe to PATH</span>。</div></div></div></div></li>
+        <li><div><span class="t">双击启动</span><div class="d">
+          <p>进入解压后的 <code>research-desk</code> 文件夹：Mac 双击 <code>启动研究台.command</code>，Windows 双击 <code>启动研究台.bat</code>。浏览器会自动打开研究台。</p>
+          <p>Mac 第一次如果提示「无法验证开发者」：<strong>右键</strong>点这个文件 → <span class="ui">打开</span>。</p></div></div></li>
+        <li><div><span class="t">别关那个命令窗口</span><div class="d">
+          <p>启动时会同时出现一个黑色或白色的命令窗口。用研究台期间别关它，关了研究台就退出了。窗口里写着研究台的地址，浏览器不小心关了，照着这个地址重新打开就行。</p></div></div></li>
+        <li><div><span class="t">填 AI 接口</span><div class="d">
+          <p>点研究台右上角 <span class="ui">设置</span>，服务商选 <span class="ui">DeepSeek</span>，把 API Key 粘贴进去。还没有 Key 的话：</p>
+          <p>打开 <a href="https://platform.deepseek.com/" target="_blank" rel="noopener">platform.deepseek.com</a> → 手机号注册登录 → 充值几块钱 → 左侧 <span class="ui">API keys</span> → <span class="ui">创建 API key</span>，复制那串以 <code>sk-</code> 开头的字符。</p></div></div></li>
+        <li><div><span class="t">保存并测试</span><div class="d">
+          <p>模型名<strong>保持默认就行</strong>，直接点 <span class="ui">保存并测试</span>。看到「接口可用」就成功了，再点 <span class="ui pri">保存</span>。</p>
+          <p>如果提示「模型名服务商不认识」，把「日常模型」改成 <code>deepseek-chat</code> 再测一次。</p></div></div></li>
+        <li><div><span class="t">写一句你的研究方向（可选）</span><div class="d">
+          <p>在设置的「我的研究方向」写一句话，例如「钙钛矿太阳能电池的稳定性」。AI 讲解论文、排计划时会结合它。「论文分类」可以填几个分类，用逗号分开。</p></div></div></li>
+      </ol>
+      <div class="note warn"><span class="i">!</span><div><b>API Key 像一把私人钥匙</b>只填进研究台的「设置」里。不要截图发群、不要发给别人，也不要写进笔记或上传到网上。</div></div>
+      <div class="note info"><span class="i">i</span><div>不填 API Key 也能用研究台整理论文、高亮和写笔记，只是翻译、讲解、问答这些 AI 功能暂时不能用。</div></div>
+    </section>
+
+    <!-- 02 -->
+    <section class="sec" id="pages">
+      <div class="sec-h"><span class="num">02</span><h2>认识七个页面</h2></div>
+      <p class="intro">打开后看顶部这一排，点名字切换。迷路了就点「文库」。</p>
+      <div class="grid g2">
+        <div class="page home"><span class="ic">📚</span><div><b>文库</b><span>放论文、自动填论文信息、读 PDF、翻译、问答、高亮和笔记。大部分时间都在这里。</span></div></div>
+        <div class="page"><span class="ic">🗂️</span><div><b>组会专题</b><span>把主讲论文、PPT 大纲、逐字稿和讨论记录放在一起。</span></div></div>
+        <div class="page"><span class="ic">📰</span><div><b>每日简报</b><span>精读一篇论文，顺便看看你方向上的新论文。</span></div></div>
+        <div class="page"><span class="ic">💡</span><div><b>创新点池</b><span>收集灵感，标记「待定 / 保留 / 放弃 / 已做」。</span></div></div>
+        <div class="page"><span class="ic">🧩</span><div><b>图解</b><span>能点、能拖的讲解网页，把难懂的概念讲明白。</span></div></div>
+        <div class="page"><span class="ic">📈</span><div><b>进度</b><span>看阅读时长、高亮、问答和新增论文。</span></div></div>
+        <div class="page"><span class="ic">📅</span><div><b>计划</b><span>把阅读和研究任务排进一周里。</span></div></div>
+      </div>
+    </section>
+
+    <!-- 03 -->
+    <section class="sec" id="add">
+      <div class="sec-h"><span class="num">03</span><h2>把论文放进文库</h2></div>
+      <p class="intro">两种方法，任选一种。放进来以后，论文信息会自动填好。</p>
+      <div class="grid g2">
+        <div class="card feat"><span class="tag">最快</span><h4>直接拖进来</h4><ol><li>进入 <span class="ui">文库</span>。</li><li>把电脑里的 PDF 拖到论文列表上，松手。</li><li>研究台会自动新建条目。</li></ol></div>
+        <div class="card feat"><span class="tag">填信息</span><h4>手动添加</h4><ol><li>点 <span class="ui pri">+ 添加论文</span>。</li><li>填 arXiv 编号或标题，可以顺便选上 PDF。</li><li>点 <span class="ui">保存到文库</span>。</li></ol><div class="foot">至少填 arXiv 编号、标题或 PDF 中的一项。</div></div>
+      </div>
+      <h3>放进来以后</h3>
+      <div class="note ok"><span class="i">✨</span><div><b>论文信息会自动填好</b>加进来几秒后，标题、作者、日期、出处（期刊或会议）、DOI 和摘要会自动查好（不用 API Key）。填了 API Key 的话，AI 还会读完论文，写好「核心贡献」「问题设定」「关联」，在「建议」里告诉你该精读还是略读，并从你的「论文分类」里选好方向。<br>它<strong>只填空着的格子</strong>，不会改你自己写的内容。以前加的论文，选中后在右侧「信息」页点 <span class="ui">✨ 自动填写</span> 就能补上。</div></div>
+      <ol class="steps">
+        <li><div><span class="t">只差 PDF？</span><div class="d">选中论文，在右侧 <span class="ui">附件</span> 里上传。一次要导入很多 PDF，用列表上方的 <span class="ui">导入本地 PDF</span> 多选：新论文会自动建条目，已有条目会自动配上 PDF。</div></div></li>
+        <li><div><span class="t">给它归类</span><div class="d">选中论文，在右侧 <span class="ui">标签与分类</span> 里选方向、加标签，以后好筛选。</div></div></li>
+      </ol>
+      <div class="note info"><span class="i">i</span><div><b>用 Zotero 的同学</b>在「设置」里填好 Zotero 数据文件夹（Mac 一般是 <code>~/Zotero</code>），再点右上角 <span class="ui">同步</span>。不用 Zotero 的跳过这条。</div></div>
+    </section>
+
+    <!-- 04 -->
+    <section class="sec" id="read">
+      <div class="sec-h"><span class="num">04</span><h2>读论文、划词翻译</h2></div>
+      <p class="intro">研究台最常用的就是这一节。</p>
+      <ol class="steps">
+        <li><div><span class="t">打开 PDF</span><div class="d">双击论文那一行就进入阅读器；也可以选中论文，在右侧点 <span class="ui">阅读与翻译</span>。</div></div></li>
+        <li><div><span class="t">调到舒服的样子</span><div class="d">顶部 <span class="ui">−</span> <span class="ui">+</span> 缩放，页码和左右箭头翻页；<span class="ui">观看模式</span> 有日常、护眼、暖色、夜间和黑白。</div></div></li>
+        <li><div><span class="t">划一段，点翻译</span><div class="d">像选普通文字一样按住鼠标拖选，松开后弹出小菜单：<span class="ui pri">翻译</span> 看译文，<span class="ui">解释</span> 看通俗讲解，<span class="ui">问 AI</span> 结合整篇论文回答。</div></div></li>
+        <li><div><span class="t">整页处理</span><div class="d">右侧 <span class="ui">翻译</span> 栏有 <span class="ui">翻译本页</span> 和 <span class="ui">本页要点</span>。翻过的页会保存，下次再看更快。</div></div></li>
+        <li><div><span class="t">高亮和批注</span><div class="d">划词后点彩色圆点就是高亮；点 <span class="ui">笔记</span> 写下想法再 <span class="ui">保存</span>。以后点这段高亮，可以改颜色、补批注或删除。</div></div></li>
+        <li><div><span class="t">回到文库</span><div class="d">点左上角 <span class="ui">← 返回文库</span>。高亮、笔记、翻译和阅读时长都会自动保存，不用找保存按钮。</div></div></li>
+      </ol>
+    </section>
+
+    <!-- 05 -->
+    <section class="sec" id="after">
+      <div class="sec-h"><span class="num">05</span><h2>读完留下记录</h2></div>
+      <div class="grid g2">
+        <div class="card feat"><h4>✓ 标记读完</h4><ol style="list-style:none;padding:0"><li>在阅读器上方或论文详情里点 <span class="ui">标为已读</span>，按钮会变成「✓ 已读完」。还没读完就先不点。</li></ol></div>
+        <div class="card feat"><h4>✎ 整理笔记</h4><ol style="list-style:none;padding:0"><li>阅读器右侧 <span class="ui">笔记</span> 记方法要点、可改进的地方；文库右侧的「笔记」还能看到所有划下来的原文和批注。</li></ol></div>
+        <div class="card feat"><h4>？ 不懂就问</h4><ol style="list-style:none;padding:0"><li>右侧 <span class="ui">问答</span> 可以直接点「讲了什么」「方法流程」「本页难点」「和我的方向」，也可以自己输入问题按回车。</li></ol></div>
+        <div class="card feat"><h4>→ 找下一篇</h4><ol style="list-style:none;padding:0"><li>右侧 <span class="ui">相关</span> 能看到相似推荐、参考文献和后续引用，看中的点 <span class="ui">加入文库</span>。加进来的只是条目，PDF 需要另外添加。</li></ol></div>
+      </div>
+      <div class="note info"><span class="i">i</span><div><b>拆解一整篇论文</b>在阅读器里点 <span class="ui">拆解论文</span> → <span class="ui">开始拆解</span>，1–3 分钟后得到方法流程、关键概念、实验结果图和自测题。先看「费曼讲解」，再到「换你来讲」写下自己的复述，点 <span class="ui">让 AI 检查我的讲解</span>。</div></div>
+    </section>
+
+    <!-- 06 -->
+    <section class="sec" id="ai">
+      <div class="sec-h"><span class="num">06</span><h2>五个功能页：手动记录，或让 AI 帮你</h2></div>
+      <p class="intro">每个页面都有两种用法：自己动手记，或者点带 ✨ 的按钮让 AI 生成。AI 生成的内容可以随时改、删。</p>
+      <div class="grid g2">
+        <div class="card feat"><span class="tag">组会专题</span><h4>准备一次组会汇报</h4><ol>
+          <li>点 <span class="ui">+ 新建组会专题</span>，填名称、日期，选主讲论文，点 <span class="ui">创建</span>。</li>
+          <li>点 <span class="ui pri">✨ AI 生成汇报准备</span>，选汇报时长（10–30 分钟），点 <span class="ui">开始生成</span>。</li>
+          <li>专题里会出现摘要、可能被问的问题、准备待办，下方有「PPT 大纲」和「逐字稿」。</li>
+          <li>会后在「组会讨论记录」「会后结论」里记老师的意见。</li></ol>
+          <div class="foot">生成的是大纲和文字稿，不会直接生成 .pptx 文件。</div></div>
+        <div class="card feat"><span class="tag">每日简报</span><h4>精读一篇 + 新论文速览</h4><ol>
+          <li>点 <span class="ui pri">✨ AI 生成简报</span>，选一篇要精读的论文。</li>
+          <li>想顺便看新论文，就勾选 arXiv，填英文关键词和时间范围。</li>
+          <li>点 <span class="ui">开始生成</span>，得到问题、方法、结论、3 条创新点和「今天能做的一小步」。</li>
+          <li>也可以点 <span class="ui">✍️ 手动写简报</span> 自己记。</li></ol>
+          <div class="foot">同一天再生成一次，会替换那天的简报，弹窗里会提示。</div></div>
+        <div class="card feat"><span class="tag">创新点池</span><h4>把灵感留下来</h4><ol>
+          <li>点 <span class="ui">+ 手动添加</span> 记下自己的想法；或点 <span class="ui pri">✨ AI 从论文提炼</span>，选论文和条数。</li>
+          <li>给每条标「待定 / 保留 / 放弃 / 已做」，之后可以按状态筛选。</li>
+          <li>在想法下方补一句你的判断，方便以后回看。</li></ol>
+          <div class="foot">AI 再生成想法时，会避开你标为「放弃」的方向。</div></div>
+        <div class="card feat"><span class="tag">图解</span><h4>把难懂的东西讲明白</h4><ol>
+          <li>点 <span class="ui pri">✨ AI 生成图解</span>，写清「想讲清楚什么」，可以选一篇论文结合着讲。</li>
+          <li>点 <span class="ui">开始生成</span>，1–3 分钟后得到一个能点、能拖的讲解网页。</li>
+          <li>手头有现成的讲解网页，用 <span class="ui">+ 导入 HTML 图解</span>。</li></ol>
+          <div class="foot">图解在隔离环境里运行，碰不到你的文库数据。</div></div>
+        <div class="card feat"><span class="tag">计划</span><h4>安排这一周读什么</h4><ol>
+          <li>点 <span class="ui pri">✨ AI 帮我排计划</span>，选开始日期、排几天、每天能用多少时间，写一句目标。</li>
+          <li>AI 会用文库里还没读完的论文排出每天的任务。</li>
+          <li>也可以点 <span class="ui">+ 添加任务</span> 自己加；做完了打勾。</li></ol></div>
+        <div class="card feat"><span class="tag">进度</span><h4>回顾这段时间做了什么</h4><ol>
+          <li>选 <span class="ui">日</span> <span class="ui">周</span> <span class="ui">月</span> <span class="ui">年</span>，用箭头切换时间。</li>
+          <li>看阅读时长、读过的论文、高亮批注、问答和新增论文。</li>
+          <li>有阅读记录时，可以点 <span class="ui">AI 帮我总结这段时间</span>。</li></ol>
+          <div class="foot">「读过的论文」只算读了半分钟以上、或有高亮、提问过的论文。</div></div>
+      </div>
+    </section>
+
+    <!-- 07 -->
+    <section class="sec" id="fulltext">
+      <div class="sec-h"><span class="num">07</span><h2>全文中英对照翻译（可选）</h2></div>
+      <p class="intro">和划词翻译不一样：它保留论文原排版，另外生成一份中英对照的 PDF。需要先单独安装一次；只翻译一段文字的话不用装。</p>
+      <ol class="steps">
+        <li><div><span class="t">先退出研究台</span><div class="d">关掉研究台的网页和那个命令窗口。</div></div></li>
+        <li><div><span class="t">双击安装</span><div class="d">在 <code>research-desk</code> 文件夹里：Mac 双击 <code>安装全文翻译.command</code>，Windows 双击 <code>安装全文翻译.bat</code>。等它显示「安装完成」，通常 5–15 分钟。</div></div></li>
+        <li><div><span class="t">重新启动，打开一篇 PDF</span><div class="d">再双击启动研究台，在文库里双击打开论文。</div></div></li>
+        <li><div><span class="t">点「全文翻译」</span><div class="d">阅读器上方点 <span class="ui pri">全文翻译</span>，等「翻译中」结束。第一次会再下载一些模型，多等几分钟。</div></div></li>
+        <li><div><span class="t">看对照版</span><div class="d">完成后论文会多出 <span class="ui">对照版</span>，点开就是中英对照的 PDF。</div></div></li>
+      </ol>
+      <div class="note info"><span class="i">i</span><div><b>不需要另外填 Key，但要联网</b>全文翻译默认用一个免费的第三方翻译服务，所以不用填 DeepSeek Key；但需要联网，偶尔会慢或失败，过一会儿再试就好。翻译结果里的数字、公式和结论，请对照原文核实。</div></div>
+    </section>
+
+    <!-- 08 -->
+    <section class="sec" id="phone">
+      <div class="sec-h"><span class="num">08</span><h2>手机访问与备份</h2></div>
+      <div class="grid g2">
+        <div class="card feat"><span class="tag">手机访问</span><h4>在手机上看论文</h4><ol>
+          <li>只在电脑上用的话，什么都不用设置。</li>
+          <li>想用手机看：「设置」里勾选 <span class="ui">允许同一 Wi-Fi / 手机热点里的手机打开研究台</span>，设一个至少 6 位的访问密码，保存。</li>
+          <li>关掉命令窗口重新启动研究台，手机连同一个 Wi-Fi，打开设置里显示的地址，输入密码。</li></ol>
+          <div class="foot">这个访问密码和 API Key 是两回事，不要设成一样的。</div></div>
+        <div class="card feat"><span class="tag">备份</span><h4>论文和笔记不丢</h4><ol>
+          <li>你的一切都在 <code>research-desk/data</code> 文件夹里，备份就是把它复制一份。</li>
+          <li>研究台每天也会自动备份一次数据库，保留 14 天。</li>
+          <li>换新版本时，把旧版的 <code>data</code> 文件夹放进新版的 <code>research-desk</code> 里，论文和笔记就都带过去了。</li></ol></div>
+      </div>
+    </section>
+
+    <!-- 09 -->
+    <section class="sec" id="faq">
+      <div class="sec-h"><span class="num">09</span><h2>遇到问题怎么办</h2></div>
+      <p class="intro">点开问题看解决办法。</p>
+      <div class="faq">
+        <details><summary>提示「还没有填写 API Key」或「API Key 不对」</summary><div class="a"><p>回「设置」重新粘贴一次 Key，点 <span class="ui">保存并测试</span>。如果提示余额不足，到 DeepSeek 网站充值。</p></div></details>
+        <details><summary>提示「模型名服务商不认识」</summary><div class="a"><p>到「设置」把「日常模型」改成 <code>deepseek-chat</code>，深度模型改成 <code>deepseek-reasoner</code> 或留空，再点 <span class="ui">保存并测试</span>。用其他服务商时，模型名以它官网的列表为准。</p></div></details>
+        <details><summary>浏览器关了，想继续用</summary><div class="a"><p>命令窗口还开着的话，打开窗口里显示的地址（通常是 <code>http://127.0.0.1:8765</code>；如果这个端口被占用，研究台会自动换成 8766、8767……以窗口里写的为准）。窗口也关了的话，重新双击启动文件。</p></div></details>
+        <details><summary>Mac 双击启动文件，提示「没有权限」或「无法打开」</summary><div class="a"><p>先试 <strong>右键</strong> 点启动文件 → <span class="ui">打开</span>。还不行：打开「终端」（在启动台里搜「终端」），输入 <code>chmod +x </code>（末尾有个空格），把 <code>启动研究台.command</code> 拖进终端窗口，按回车，再双击它。</p></div></details>
+        <details><summary>Windows 双击后提示没有 Python</summary><div class="a"><p>到 <a href="https://www.python.org/downloads/" target="_blank" rel="noopener">python.org</a> 安装 Python，安装时勾选 <span class="ui">Add python.exe to PATH</span>，装好后再双击启动文件。</p></div></details>
+        <details><summary>点「全文翻译」提示还没安装</summary><div class="a"><p>这是功能还没装，不是论文坏了。退出研究台，双击 <code>安装全文翻译</code>，装完重新打开。只想翻译一段的话不用装，直接划词点「翻译」。</p></div></details>
+        <details><summary>论文信息没有自动填上</summary><div class="a"><p>基本信息来自 arXiv 和 Semantic Scholar：有 arXiv 编号、DOI，或者 PDF 第一页印着编号的论文最容易查到；只在 arXiv 上的预印本，「出处」常常是空的，这是正常的。核心贡献、问题设定这些要填了 API Key 才会写。可以选中论文，在「信息」页点 <span class="ui">✨ 自动填写</span> 再试一次，或者自己补上。</p></div></details>
+        <details><summary>「相关」一直在转</summary><div class="a"><p>第一次查询要等几秒到十几秒，之后一周内再打开同一篇是秒出。「本文引用的经典」是空的，一般是数据源没有公开这篇的参考文献，界面上会说明，直接看论文最后的参考文献就行。</p></div></details>
+        <details><summary>「拆解论文」说读不出文字</summary><div class="a"><p>扫描版或图片版的 PDF 里没有文字，AI 读不到。换一个能选中文字的版本（比如 arXiv 上下载的）再试。</p></div></details>
+        <details><summary>AI 说的和原文不一样</summary><div class="a"><p>以论文原文为准。用页码回到原文核对，尤其是数字、公式和结论。</p></div></details>
+      </div>
+      <div class="note ok"><span class="i">✓</span><div>日常使用只需要关心两件事：研究台的页面能不能打开，AI 能不能正常回答。其他技术细节都不用管。</div></div>
+    </section>
+
+    <footer>本手册随研究台开源包一起发布，按钮名以当前开源版界面为准。请勿把 API Key 写进本文件或上传到公开仓库。</footer>
+  </main>
+</div>
+<script>
+(function(){
+  var root=document.documentElement;
+  try{var t=localStorage.getItem("rd-manual-theme");if(t)root.setAttribute("data-theme",t)}catch(e){}
+  var tb=document.getElementById("theme");
+  if(tb)tb.addEventListener("click",function(){
+    var dark=root.getAttribute("data-theme")==="dark"||(!root.getAttribute("data-theme")&&matchMedia("(prefers-color-scheme: dark)").matches);
+    var next=dark?"light":"dark";root.setAttribute("data-theme",next);try{localStorage.setItem("rd-manual-theme",next)}catch(e){}
+  });
+  var links=[].slice.call(document.querySelectorAll('.toc a[href^="#"], .mtoc a[href^="#"]'));
+  var secs=[].slice.call(document.querySelectorAll("section.sec"));
+  function mark(id){links.forEach(function(a){a.classList.toggle("on",a.getAttribute("href")==="#"+id)});
+    var m=document.querySelector('.mtoc a.on');if(m&&m.scrollIntoView&&getComputedStyle(m.parentNode).display!=="none")m.parentNode.scrollTo({left:m.offsetLeft-16,behavior:"smooth"})}
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)mark(e.target.id)})},{rootMargin:"-10% 0px -80% 0px"});
+    secs.forEach(function(s){io.observe(s)});
+  }
+  mark("start");
+  window.addEventListener("beforeprint",function(){document.querySelectorAll("details").forEach(function(d){d.setAttribute("open","")})});
+})();
+</script>
+</body>
+</html>
